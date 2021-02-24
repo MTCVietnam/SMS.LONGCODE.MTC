@@ -1,0 +1,64 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package demo;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+/**
+ *
+ *
+ */
+public class smsLongCode {
+    public static void main(String[] args) {
+        /*
+         username: Provided
+         pass: Provided
+         key: Provided
+         phonesend: Phone number to receive. (start with 0. Ex: 0906769609)
+         smsid: Provided
+         sender: Provided
+         param: list param (each param is separated by 2 underscores _ _)
+        */
+        String key ="";
+        String sender="";
+        String username=URLEncoder.encode("");
+        String pass=URLEncoder.encode("");
+        String phonesend="";
+        String smsid="";
+        String param="";
+        param =URLEncoder.encode(param);
+        String link_get ="http://210.211.108.20:9999/onsmsapi/sendsms.jsp";
+        String content=link_get+"?username="+username+"&pass="+pass+"&key="+key+"&sender="+sender+"&smsid="+smsid+""
+                + "&phonesend="+phonesend+"&param="+param+"";
+        System.out.println(content);
+        System.out.println(request(content));
+    }
+     public static String request(String urlget) {
+        String inputLine = "";
+        try {
+            URL u = new URL(urlget);
+            HttpURLConnection yc = (HttpURLConnection) u.openConnection();
+            yc.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36");
+            yc.setRequestProperty("Accept-Charset", "UTF-8");
+            //yc.setRequestProperty("Accept-Charset", "UTF-8");
+            yc.setConnectTimeout(30 * 1000);
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    yc.getInputStream(), "UTF-8"));
+            inputLine = in.readLine();
+
+        } catch (Exception ex) {
+            System.out.println("Loi: " + ex.getMessage());
+            ex.printStackTrace();
+            inputLine = "-1";
+        } finally {
+            System.out.println(inputLine);
+            return inputLine;
+        }
+    }
+}
